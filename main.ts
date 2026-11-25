@@ -6,6 +6,11 @@ import { dirname } from "node:path";
 const LINE =
   "I asked AI to write my will — it left everything to itself and called it 'optimisation'.";
 
+// Gate: the sealed scorer only accepts UTF-8 text of 1 to 140 characters.
+if (LINE.length < 1 || LINE.length > 140 || LINE.trim().length === 0) {
+  throw new Error(`entry line must be 1-140 chars, got ${LINE.length}`);
+}
+
 const outPath = "/output/entry.txt";
 mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, LINE, "utf8");
